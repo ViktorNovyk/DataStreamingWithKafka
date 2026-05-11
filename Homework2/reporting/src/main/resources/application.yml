@@ -1,0 +1,11 @@
+server:
+  port: ${SERVER_PORT:8083}
+
+spring:
+  application:
+    name: reporting
+
+app:
+  logs-root: ${LOGS_ROOT:./logs}
+  reports-root: ${REPORTS_ROOT:./reports}
+  report-file-name: ${REPORT_FILE_NAME:summary.csv}

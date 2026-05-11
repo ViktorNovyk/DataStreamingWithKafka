@@ -1,0 +1,21 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  application:
+    name: csv-producer
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+
+app:
+  topic-prefix: ${TOPIC_PREFIX:hw2-exp-}
+  producer-id: ${PRODUCER_ID:csv-producer}
+  csv:
+    max-chars-per-column: ${CSV_MAX_CHARS_PER_COLUMN:131072}
+    max-columns: ${CSV_MAX_COLUMNS:64}
+    input-buffer-size: ${CSV_INPUT_BUFFER_SIZE:65536}

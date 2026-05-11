@@ -1,0 +1,5 @@
+.m2/
+**/target/
+logs/
+reports/
+*.iml

@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: message-consumer
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${KAFKA_GROUP_ID:hw2-consumers}
+      auto-offset-reset: earliest
+      max-poll-records: 5
+      max-poll-interval: 30s
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: kafka.hw2.consumer
+        spring.json.value.default.type: kafka.hw2.consumer.ExperimentMessage
+        spring.json.use.type.headers: false
+    listener:
+      ack-mode: record
+      concurrency: ${KAFKA_LISTENER_CONCURRENCY:1}
+
+app:
+  logs-root: ${LOGS_ROOT:./logs}
+  consumer:
+    topic-pattern: ${TOPIC_PATTERN:hw2-exp-.*}
+    group-id: ${KAFKA_GROUP_ID:hw2-consumers}

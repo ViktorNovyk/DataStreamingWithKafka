@@ -1,0 +1,53 @@
+services:
+  csv-producer-1:
+    image: csv-producer:latest
+    container_name: csv-producer-1
+    ports:
+      - "8081:8081"
+    environment:
+      SERVER_PORT: 8081
+      KAFKA_BOOTSTRAP_SERVERS: kafka-1:29092,kafka-2:29092,kafka-3:29092
+      PRODUCER_ID: csv-producer-1
+      TOPIC_PREFIX: hw2-exp-
+    restart: unless-stopped
+
+  csv-producer-2:
+    image: csv-producer:latest
+    container_name: csv-producer-2
+    ports:
+      - "8082:8082"
+    environment:
+      SERVER_PORT: 8082
+      KAFKA_BOOTSTRAP_SERVERS: kafka-1:29092,kafka-2:29092,kafka-3:29092
+      PRODUCER_ID: csv-producer-2
+      TOPIC_PREFIX: hw2-exp-
+    restart: unless-stopped
+
+  message-consumer:
+    image: message-consumer:latest
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka-1:29092,kafka-2:29092,kafka-3:29092
+      KAFKA_GROUP_ID: hw2-consumers
+      TOPIC_PATTERN: ${TOPIC_PATTERN:-hw2-exp-h}
+      LOGS_ROOT: /shared/logs
+    volumes:
+      - shared-logs:/shared/logs
+    restart: unless-stopped
+
+  reporting:
+    image: reporting:latest
+    ports:
+      - "8083:8083"
+    environment:
+      SERVER_PORT: 8083
+      LOGS_ROOT: /shared/logs
+      REPORTS_ROOT: /shared/reports
+      REPORT_FILE_NAME: summary.csv
+    volumes:
+      - shared-logs:/shared/logs
+      - shared-reports:/shared/reports
+    restart: unless-stopped
+
+volumes:
+  shared-logs:
+  shared-reports:
