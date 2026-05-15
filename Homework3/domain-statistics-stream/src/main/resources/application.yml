@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: hw3-domain-statistics-stream
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    streams:
+      application-id: ${STREAMS_APPLICATION_ID:hw3-domain-statistics}
+      state-dir: ${STREAMS_STATE_DIR:/tmp/kafka-streams/hw3-domain-statistics}
+      properties:
+        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        processing.guarantee: at_least_once
+        commit.interval.ms: 1000
+
+app:
+  input-topic: ${INPUT_TOPIC:browser-history-visits}
+  top-five-log-interval-ms: ${TOP_FIVE_LOG_INTERVAL_MS:10000}
