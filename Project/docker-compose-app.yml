@@ -1,0 +1,85 @@
+services:
+  project-csv-producer:
+    image: project-csv-producer:latest
+    platform: linux/arm64
+    ports:
+      - "8081:8081"
+    environment:
+      SERVER_PORT: 8081
+      KAFKA_BOOTSTRAP_SERVERS: kafka-1:29092
+      RAW_TOPIC: reddit-raw-comments
+    restart: unless-stopped
+
+  project-language-detection-service:
+    image: project-language-detection-service:latest
+    platform: linux/arm64
+#    ports:
+#      - "8082:8082"
+    environment:
+      SERVER_PORT: 8082
+      KAFKA_BOOTSTRAP_SERVERS: kafka-1:29092
+      RAW_TOPIC: reddit-raw-comments
+      LANGUAGE_TOPIC: reddit-comments-with-language
+      OPENNLP_LANGUAGE_MODEL_PATH: /models/opennlp/langdetect-183.bin
+      OPENNLP_ALLOWED_LANGUAGES: en,de,cs,it,et,sl,el,lv,uk,sv,is
+      OPENNLP_LANGUAGE_MIN_CONFIDENCE: 0.0
+      OPENNLP_RELIABLE_MIN_CONFIDENCE: 0.10
+      OPENNLP_RELIABLE_MIN_MARGIN: 0.02
+    volumes:
+      - ./models:/models:ro
+    restart: unless-stopped
+
+  project-sentiment-detection-service:
+    image: project-sentiment-detection-service:latest
+    platform: linux/arm64
+#    ports:
+#      - "8083:8083"
+    environment:
+      SERVER_PORT: 8083
+      KAFKA_BOOTSTRAP_SERVERS: kafka-1:29092
+      LANGUAGE_TOPIC: reddit-comments-with-language
+      SENTIMENT_TOPIC: reddit-comments-sentiment
+#      SENTIMENT_ONNX_MODEL_PATH: /models/sentiment/model-int8.onnx
+#      SENTIMENT_TOKENIZER_PATH: /models/sentiment/tokenizer.json
+      SENTIMENT_ONNX_MODEL_PATH: /models/sentiment-distilbert/model-int8.onnx
+      SENTIMENT_TOKENIZER_PATH: /models/sentiment-distilbert/tokenizer.json
+      SENTIMENT_CONFIG_PATH: /models/sentiment-distilbert/config.json
+      SENTIMENT_PAD_TOKEN_ID: 0
+      SENTIMENT_MAX_SEQUENCE_LENGTH: 64
+#      SENTIMENT_PAD_TOKEN_ID: 1
+      SENTIMENT_COLLAPSE_NEUTRAL_TO_BINARY: "false"
+      SENTIMENT_ORT_INTRA_OP_THREADS: 2
+      SENTIMENT_ORT_INTER_OP_THREADS: 1
+      KAFKA_MAX_POLL_RECORDS: 32
+    volumes:
+      - ./models:/models:ro
+    restart: unless-stopped
+
+  project-keyword-service:
+    image: project-keyword-service:latest
+    platform: linux/arm64
+#    ports:
+#      - "8084:8084"
+    environment:
+      SERVER_PORT: 8084
+      KAFKA_BOOTSTRAP_SERVERS: kafka-1:29092
+      LANGUAGE_TOPIC: reddit-comments-with-language
+      KEYWORD_TOPIC: reddit-comments-keywords
+      OPENNLP_TOKENS_DIR: /models/opennlp/tokens
+      OPENNLP_POS_DIR: /models/opennlp/pos
+      OPENNLP_LEMMAS_DIR: /models/opennlp/lemmas
+    volumes:
+      - ./models:/models:ro
+    restart: unless-stopped
+
+  project-statistics-service:
+    image: project-statistics-service:latest
+    platform: linux/arm64
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka-1:29092
+      STREAMS_APPLICATION_ID: project-reddit-statistics
+      LANGUAGE_TOPIC: reddit-comments-with-language
+      SENTIMENT_TOPIC: reddit-comments-sentiment
+      KEYWORD_TOPIC: reddit-comments-keywords
+      STATISTICS_LOG_INTERVAL_MS: 10000
+    restart: unless-stopped

@@ -1,0 +1,38 @@
+server:
+  port: ${SERVER_PORT:8083}
+
+spring:
+  application:
+    name: project-sentiment-detection-service
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    listener:
+      type: batch
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP:project-sentiment-detection-service}
+      auto-offset-reset: earliest
+      max-poll-records: ${KAFKA_MAX_POLL_RECORDS:16}
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: kafka.project.LanguageDetectedCommentMessage
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+
+app:
+  language-topic: ${LANGUAGE_TOPIC:reddit-comments-with-language}
+  sentiment-topic: ${SENTIMENT_TOPIC:reddit-comments-sentiment}
+  sentiment:
+    onnx-model-path: ${SENTIMENT_ONNX_MODEL_PATH:/models/sentiment/model.onnx}
+    tokenizer-path: ${SENTIMENT_TOKENIZER_PATH:/models/sentiment/tokenizer.json}
+    config-path: ${SENTIMENT_CONFIG_PATH:}
+    max-sequence-length: ${SENTIMENT_MAX_SEQUENCE_LENGTH:128}
+    pad-token-id: ${SENTIMENT_PAD_TOKEN_ID:1}
+    collapse-neutral-to-binary: ${SENTIMENT_COLLAPSE_NEUTRAL_TO_BINARY:false}
+    ort-intra-op-threads: ${SENTIMENT_ORT_INTRA_OP_THREADS:2}
+    ort-inter-op-threads: ${SENTIMENT_ORT_INTER_OP_THREADS:1}

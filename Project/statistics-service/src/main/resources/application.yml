@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: project-statistics-service
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    streams:
+      application-id: ${STREAMS_APPLICATION_ID:project-reddit-statistics}
+      state-dir: ${STREAMS_STATE_DIR:/tmp/kafka-streams/project-reddit-statistics}
+      properties:
+        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        processing.guarantee: at_least_once
+        commit.interval.ms: 1000
+
+app:
+  language-topic: ${LANGUAGE_TOPIC:reddit-comments-with-language}
+  sentiment-topic: ${SENTIMENT_TOPIC:reddit-comments-sentiment}
+  keyword-topic: ${KEYWORD_TOPIC:reddit-comments-keywords}
+  statistics-log-interval-ms: ${STATISTICS_LOG_INTERVAL_MS:10000}

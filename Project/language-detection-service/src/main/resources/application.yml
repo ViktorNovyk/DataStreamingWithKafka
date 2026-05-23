@@ -1,0 +1,32 @@
+server:
+  port: ${SERVER_PORT:8082}
+
+spring:
+  application:
+    name: project-language-detection-service
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP:project-language-detection-service}
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: kafka.project.RawCommentMessage
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+
+app:
+  raw-topic: ${RAW_TOPIC:reddit-raw-comments}
+  language-topic: ${LANGUAGE_TOPIC:reddit-comments-with-language}
+  opennlp:
+    language-model-path: ${OPENNLP_LANGUAGE_MODEL_PATH:/models/opennlp/langdetect-183.bin}
+    allowed-languages: ${OPENNLP_ALLOWED_LANGUAGES:en,de,cs,it,et,sl,el,lv,uk,sv,is}
+    minimum-confidence: ${OPENNLP_LANGUAGE_MIN_CONFIDENCE:0.0}
+    reliable-minimum-confidence: ${OPENNLP_RELIABLE_MIN_CONFIDENCE:0.10}
+    reliable-minimum-margin: ${OPENNLP_RELIABLE_MIN_MARGIN:0.02}

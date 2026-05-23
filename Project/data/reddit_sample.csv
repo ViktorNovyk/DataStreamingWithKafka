@@ -1,0 +1,34 @@
+language,text,correction
+english,"I love this community because the discussions are useful and friendly.",positive
+english,"This update is terrible and the application crashes every time.",negative
+english,"The post explains the release schedule and basic installation steps.",neutral
+german,"Ich liebe diese Community, weil die Diskussionen hilfreich und freundlich sind.",positive
+german,"Dieses Update ist furchtbar und die Anwendung stuerzt jedes Mal ab.",negative
+german,"Der Beitrag erklaert den Release-Zeitplan und die grundlegenden Installationsschritte.",neutral
+czech,"Mam rad tuto komunitu, protoze diskuse jsou uzitecne a pratelske.",positive
+czech,"Tato aktualizace je hrozna a aplikace pokazde spadne.",negative
+czech,"Prispevek vysvetluje plan vydani a zakladni kroky instalace.",neutral
+italian,"Adoro questa comunita perche le discussioni sono utili e amichevoli.",positive
+italian,"Questo aggiornamento e terribile e l'applicazione si blocca ogni volta.",negative
+italian,"Il post spiega il calendario del rilascio e i passaggi di installazione di base.",neutral
+estonian,"Mulle meeldib see kogukond, sest arutelud on kasulikud ja sobralikud.",positive
+estonian,"See uuendus on kohutav ja rakendus jookseb iga kord kokku.",negative
+estonian,"Postitus selgitab valjalaske ajakava ja pohilisi paigaldusetappe.",neutral
+slovene,"Vsec mi je ta skupnost, ker so razprave koristne in prijazne.",positive
+slovene,"Ta posodobitev je grozna in aplikacija se vsakic sesuje.",negative
+slovene,"Objava pojasnjuje urnik izdaje in osnovne korake namestitve.",neutral
+greek,"Μου αρέσει αυτή η κοινότητα επειδή οι συζητήσεις είναι χρήσιμες και φιλικές.",positive
+greek,"Αυτή η ενημέρωση είναι απαίσια και η εφαρμογή κολλάει κάθε φορά.",negative
+greek,"Η ανάρτηση εξηγεί το πρόγραμμα κυκλοφορίας και τα βασικά βήματα εγκατάστασης.",neutral
+latvian,"Man patik si kopiena, jo diskusijas ir noderigas un draudzigas.",positive
+latvian,"Sis atjauninajums ir briesmigs, un lietotne katru reizi avare.",negative
+latvian,"Ieraksts izskaidro izlaišanas grafiku un pamata instalacijas solus.",neutral
+ukrainian,"Мені подобається ця спільнота, бо обговорення корисні та дружні.",positive
+ukrainian,"Це оновлення жахливе, і застосунок щоразу падає.",negative
+ukrainian,"Допис пояснює графік випуску та базові кроки встановлення.",neutral
+swedish,"Jag gillar den har gemenskapen eftersom diskussionerna ar anvandbara och vanliga.",positive
+swedish,"Den har uppdateringen ar hemsk och programmet kraschar varje gang.",negative
+swedish,"Inlagget forklarar releaseschemat och de grundlaggande installationsstegen.",neutral
+icelandic,"Mér líkar þetta samfélag því umræðurnar eru gagnlegar og vinalegar.",positive
+icelandic,"Þessi uppfærsla er hræðileg og forritið hrynur í hvert skipti.",negative
+icelandic,"Færslan útskýrir útgáfuáætlunina og grunnskref uppsetningar.",neutral

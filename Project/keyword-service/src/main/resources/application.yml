@@ -1,0 +1,31 @@
+server:
+  port: ${SERVER_PORT:8084}
+
+spring:
+  application:
+    name: project-keyword-service
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP:project-keyword-service}
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: kafka.project.LanguageDetectedCommentMessage
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+
+app:
+  language-topic: ${LANGUAGE_TOPIC:reddit-comments-with-language}
+  keyword-topic: ${KEYWORD_TOPIC:reddit-comments-keywords}
+  keyword:
+    models:
+      tokens-dir: ${OPENNLP_TOKENS_DIR:/models/opennlp/tokens}
+      pos-dir: ${OPENNLP_POS_DIR:/models/opennlp/pos}
+      lemmas-dir: ${OPENNLP_LEMMAS_DIR:/models/opennlp/lemmas}

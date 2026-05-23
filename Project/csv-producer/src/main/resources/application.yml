@@ -1,0 +1,23 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  application:
+    name: project-csv-producer
+  servlet:
+    multipart:
+      max-file-size: ${MAX_FILE_SIZE:128MB}
+      max-request-size: ${MAX_REQUEST_SIZE:128MB}
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+
+app:
+  raw-topic: ${RAW_TOPIC:reddit-raw-comments}
+  csv:
+    max-chars-per-column: ${CSV_MAX_CHARS_PER_COLUMN:262144}
+    input-buffer-size: ${CSV_INPUT_BUFFER_SIZE:262144}
