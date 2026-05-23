@@ -7,7 +7,7 @@ PROJECT_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd)"
 
 SOURCE_MODEL="${1:-${PROJECT_ROOT}/models/sentiment-distilbert/model.onnx}"
 TARGET_MODEL="${2:-${PROJECT_ROOT}/models/sentiment-distilbert/model-int8.onnx}"
-VENV_DIR="${SENTIMENT_EXPORT_VENV:-${PROJECT_ROOT}/.venv-sentiment-export}"
+VENV_DIR="${SENTIMENT_EXPORT_VENV:-${PROJECT_ROOT}/.venv}"
 
 PYTHON_BIN="python3"
 if [[ -x "${VENV_DIR}/bin/python" ]]; then

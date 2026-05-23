@@ -448,6 +448,9 @@ Start the application services:
 
 ```bash
 docker compose -f docker-compose-app.yml up -d
+
+# Scale services
+docker compose -f docker-compose-app.yml up -d --scale project-sentiment-detection-service=3 --scale project-keyword-service=2
 ```
 
 Upload the sample CSV:
@@ -463,3 +466,9 @@ docker compose -f docker-compose-app.yml logs -f project-statistics-service
 ```
 
 Check out the Kafka consumer processing - http://localhost:8080/ui/clusters/project-kafka/consumer-groups
+
+### 7. Stop services
+```bash
+docker compose -f docker-compose-app.yml down -v
+docker compose -f docker-compose-kafka.yml down -v
+```
